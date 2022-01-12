@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Evaluate News NLP</title>
+</head>
+
+<body>
+    <header>
+        <nav class="pageHome">
+            <span>Evaluate News</span>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <form id="urlForm" onsubmit="return ScopeConnector.checkArticleByUrl(event)">
+                <input id="urlTxt" type="text" name="urlInput" placeholder="Blog Url" />
+                <input id="btnSubmit" value="Check Blog Language" type="submit" name="form-submit" onclick="return ScopeConnector.checkArticleByUrl(event)" onsubmit="return ScopeConnector.handleSubmit(event)" />
+            </form>
+        </section>
+        <section>
+            <strong>Form Results: <span id="loading" class="loadingText" hidden>Loading...</span></strong>
+            <div id="results"></div>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+
+        /**
+         * Remove Comment from below code to unregister Service Worker
+         */
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        //         for (let registration of registrations) {
+        //             registration.unregister()
+        //         }
+        //     }).catch(function(err) {
+        //         console.log('Service Worker registration failed: ', err);
+        //     });
+        // }
+    </script>
+</body>
+
+</html>
