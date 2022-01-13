@@ -25,21 +25,30 @@ app.listen(8081, function() {
 })
 
 const checkAricleAPI = async url => {
+    let API_KEY = null;
+    console.log(':::Start Calling external API:::');
+    try {
+        API_KEY = process.env.MY_API_KEY;
+        if (!API_KEY) return { status: { code: 500, msg: 'Internal Server Error, Missing required API params!' } };
+    } catch (err) {
+        return { status: { code: 500, msg: 'Internal Server Error, Missing required API params!' } };
+    }
+    console.log(':::Start the fetch:::');
     const formdata = new FormData();
-    formdata.append("key", process.env.MY_API_KEY);
+    formdata.append("key", API_KEY);
     formdata.append("url", url);
 
     const request = await fetch("https://api.meaningcloud.com/lang-4.0/identification", {
         method: 'POST',
         body: formdata,
     });
-
+    console.log(':::Request Success:::');
     try {
         const response = await request.json();
         return response;
     } catch (error) {
-        console.log('error', error);
-        return { code: -1, msg: `An error occurred ${error}` }
+        console.log('Error: ', error);
+        return { status: { code: 500, msg: `An error occurred ${error}` } };
     }
 }
 
@@ -49,6 +58,7 @@ app.get('/', function(req, res) {
 
 app.get('/checkArticle', function(req, res) {
     const query = req.query;
+    console.log(':::checkArticle Invoked::: ', query.url);
     if (Object.keys(serverDB).includes(query.url)) {
         console.log('Server DB:', serverDB);
         res.send({ status: 0, data: serverDB[query.url] });
@@ -65,7 +75,7 @@ app.get('/checkArticle', function(req, res) {
                 break;
             default:
                 res.send({
-                    status: -1,
+                    status: 500,
                     msg: `An error occurred:${data.status.code ? '('+data.status.code+')' : ''}\n${data.status.msg ? data.status.msg : ''}!`
                 });
                 break;

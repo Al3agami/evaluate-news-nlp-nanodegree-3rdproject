@@ -17,7 +17,7 @@ export const checkArticleByUrl = event => {
         .then(res => res.json())
         .then(function(res) {
             document.getElementById('loading').setAttribute('hidden', '');
-            if ([200, -1].includes(res.status)) {
+            if (res.status !== 0) {
                 alert(res.msg);
             } else {
                 appendChildToElement('results', createResultTable(res.data))

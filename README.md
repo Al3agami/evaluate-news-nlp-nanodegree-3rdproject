@@ -6,7 +6,8 @@ A web tool that allow users to run natural language processing on articles or bl
 
 1. Download the project from github, or Fork this repo, then clone master brnach from your forked repo down to your computer.
 2. Open terminal and navigate `cd` to the project folder and run ```npm install```, or through your code editor terminal.
-3. To run the project directly in browser on production mode, run ```npm run build-prod```, then go to your browser and open localhost:8081.
+3. Create `.env` file and assign your `meaningcloud.com` API key to a variable called `MY_API_KEY`, if you didn't create this environment variables file you will not be able to make successful API request.
+4. To run the project directly in browser on production mode, run ```npm run build-prod```, then go to your browser and open localhost:8081.
 
 
 ## Project Content
